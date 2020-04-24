@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  resources :contacts
-  resources :users
+  resources :messages, except: [:index]
+  resources :chats, except: [:index]
+  resources :contacts, except: [:index]
+  resources :users, except: [:index]
   
   namespace :api do
     namespace :v1 do

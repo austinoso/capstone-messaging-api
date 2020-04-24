@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_090607) do
+ActiveRecord::Schema.define(version: 2020_04_24_034116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chats", force: :cascade do |t|
+    t.bigint "initiator_id", null: false
+    t.bigint "recipient_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["initiator_id"], name: "index_chats_on_initiator_id"
+    t.index ["recipient_id"], name: "index_chats_on_recipient_id"
+  end
 
   create_table "contacts", force: :cascade do |t|
     t.bigint "receiver_id", null: false
@@ -25,6 +34,16 @@ ActiveRecord::Schema.define(version: 2020_04_23_090607) do
     t.index ["sender_id"], name: "index_contacts_on_sender_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "chat_id", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -33,7 +52,10 @@ ActiveRecord::Schema.define(version: 2020_04_23_090607) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "chats", "users", column: "initiator_id"
+  add_foreign_key "chats", "users", column: "recipient_id"
   add_foreign_key "contacts", "users", column: "receiver_id"
   add_foreign_key "contacts", "users", column: "sender_id"
+  add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "users"
 end
-

@@ -1,7 +1,9 @@
 class User < ApplicationRecord
+    #### LOGIN ####
     has_secure_password
     validates :username, uniqueness: { case_sensitive: false }
 
+    #### CONTACTS ####
     has_many :contact_reqs_sent, class_name: 'Contact', foreign_key: 'sender_id', inverse_of: 'sender', dependent: :destroy
     has_many :contact_reqs_received, class_name: 'Contact', foreign_key: 'receiver_id', inverse_of: 'receiver', dependent: :destroy
 
@@ -12,5 +14,13 @@ class User < ApplicationRecord
 
     def contacts
         sent_contacts + received_contacts
+    end
+
+    #### CHATS ####
+    has_many :chats_created, class_name: 'Chat', foreign_key: 'initiator_id', inverse_of: 'initiator'
+    has_many :chats_received, class_name: 'Chat', foreign_key: 'recipient_id', inverse_of: 'recipient'
+
+    def chats
+        chats_created + chats_received
     end
 end

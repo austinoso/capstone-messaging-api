@@ -1,5 +1,7 @@
 class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :update, :destroy]
+  skip_before_action :authorized
+
 
   # GET /contacts
   def index

@@ -1,16 +1,17 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
+  skip_before_action :authorized
 
   # GET /users
-  def index
-    @users = User.all
+  # def index
+  #   @users = User.all
 
-    render json: @users
-  end
+  #   render json: @users
+  # end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user, include: ["contact_reqs_received.*", "pending_requests"]
   end
 
   # POST /users
