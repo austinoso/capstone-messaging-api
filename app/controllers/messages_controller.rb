@@ -19,9 +19,12 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
-      render json: @message, status: :created, location: @message
-    else
-      render json: @message.errors, status: :unprocessable_entity
+      chat = Chat.find(@message.chat_id)
+      ChatsChannel.broadcast_to(chat, @message)
+
+    #   render json: @message, status: :created, location: @message
+    # else
+    #   render json: @message.errors, status: :unprocessable_entity
     end
   end
 

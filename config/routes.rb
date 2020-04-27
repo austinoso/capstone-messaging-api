@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  resources :messages, except: [:index]
-  resources :chats, except: [:index]
+  resources :messages
+  resources :chats
   resources :contacts, except: [:index]
   resources :users, except: [:index]
+
+  mount ActionCable.server => '/cable'
   
   namespace :api do
     namespace :v1 do

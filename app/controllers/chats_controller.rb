@@ -2,12 +2,12 @@ class ChatsController < ApplicationController
   before_action :set_chat, only: [:show, :update, :destroy]
   skip_before_action :authorized
 
-  # GET /chats
-  # def index
-  #   @chats = Chat.all
+  #GET /chats
+  def index
+    @chats = Chat.all
 
-  #   render json: @chats
-  # end
+    render json: @chats
+  end
 
   # GET /chats/1
   def show
@@ -19,6 +19,13 @@ class ChatsController < ApplicationController
     @chat = Chat.new(chat_params)
 
     if @chat.save
+    #   serialized_data = ActiveModelSerializers::Adapter::Json.new(
+    #     ChatSerializer.new(@chat)
+    #   ).serializable_hash
+    #   ActionCable.server.brodcast 'chats_channel', serialized_data
+    #   head :ok
+    # end
+
       render json: @chat, status: :created, location: @chat
     else
       render json: @chat.errors, status: :unprocessable_entity
