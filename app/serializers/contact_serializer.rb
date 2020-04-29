@@ -1,5 +1,5 @@
 class ContactSerializer < ActiveModel::Serializer
   attributes :id, :status
-  has_one :sender, serializer: UserSerializer
-
+  has_one :receiver
+  has_one :sender
 end

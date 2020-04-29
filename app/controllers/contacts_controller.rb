@@ -17,7 +17,7 @@ class ContactsController < ApplicationController
 
   # POST /contacts
   def create
-    @contact = Contact.new(contact_params)
+    @contact = Contact.new(receiver: User.find_by(username: contact_params[:receiver_username]), sender_id: contact_params[:sender_id] )
 
     if @contact.save
       render json: @contact, status: :created, location: @contact
@@ -48,6 +48,6 @@ class ContactsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def contact_params
-      params.require(:contact).permit(:receiver_id, :sender_id)
+      params.require(:contact).permit(:receiver_username, :sender_id, :status)
     end
 end

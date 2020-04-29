@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :messages
   resources :chats
-  resources :contacts, except: [:index]
+  resources :contacts#, except: [:index]
   resources :users, except: [:index]
 
   mount ActionCable.server => '/cable'
