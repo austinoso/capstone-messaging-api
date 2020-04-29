@@ -11,7 +11,9 @@ class ChatsController < ApplicationController
 
   # GET /chats/1
   def show
-    render json: @chat, include: ['messages.*']
+    if @chat 
+      render json: @chat, include: ['messages.*', 'initiator', 'recipient']
+    end
   end
 
   # POST /chats
