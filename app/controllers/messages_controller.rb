@@ -1,13 +1,12 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :update, :destroy]
-  skip_before_action :authorized
 
   # GET /messages
-  def index
-    @messages = Message.all
+  # def index
+  #   @messages = Message.all
 
-    render json: @messages
-  end
+  #   render json: @messages
+  # end
 
   # GET /messages/1
   def show
@@ -20,8 +19,7 @@ class MessagesController < ApplicationController
 
     if @message.save
       chat = Chat.find(@message.chat_id)
-      p 'hit'
-      ChatsChannel.broadcast_to(chat, @message)
+      ChatsChannel.broadcast_to(chat, {content: @message.content, user: @message.user, chat_id: @message.chat_id})
     end
   end
 

@@ -1,14 +1,12 @@
 class ContactsController < ApplicationController
   before_action :set_contact, only: [:show, :update, :destroy]
-  skip_before_action :authorized
-
 
   # GET /contacts
-  def index
-    @contacts = Contact.all
+  # def index
+  #   @contacts = Contact.all
 
-    render json: @contacts
-  end
+  #   render json: @contacts
+  # end
 
   # GET /contacts/1
   def show
