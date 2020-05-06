@@ -53,5 +53,6 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = [
     # Local address we use for our standalone client
     'http://localhost:3001',
-]
+  ]
+  
 end

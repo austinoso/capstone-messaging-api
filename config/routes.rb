@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   resources :messages, except: [:index]
-  resources :chats, except: [:index]
+  resources :chats#, except: [:index] do
+  #end
+  
   resources :contacts, except: [:index]
   resources :users, except: [:index]
+  
+  get 'chats/:id/messages', to: 'chats#messages'
 
   mount ActionCable.server => '/cable'
   

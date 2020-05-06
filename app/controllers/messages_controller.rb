@@ -13,13 +13,14 @@ class MessagesController < ApplicationController
     render json: @message
   end
 
+
   # POST /messages
   def create
     @message = Message.new(message_params)
 
     if @message.save
       chat = Chat.find(@message.chat_id)
-      ChatsChannel.broadcast_to(chat, {content: @message.content, user: @message.user, chat_id: @message.chat_id})
+      MessagesChannel.broadcast_to(chat, {content: @message.content, user: @message.user, chat_id: @message.chat_id})
     end
   end
 

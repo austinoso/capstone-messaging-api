@@ -1,4 +1,4 @@
-class ChatsChannel < ApplicationCable::Channel
+class ContactsChannel < ApplicationCable::Channel
   def subscribed
     stream_for current_user
   end
@@ -6,6 +6,4 @@ class ChatsChannel < ApplicationCable::Channel
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
   end
-
-
 end
