@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_05_06_011742) do
     t.bigint "recipient_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "accetped", default: false
+    t.boolean "accepted", default: false
     t.index ["initiator_id"], name: "index_chats_on_initiator_id"
     t.index ["recipient_id"], name: "index_chats_on_recipient_id"
   end

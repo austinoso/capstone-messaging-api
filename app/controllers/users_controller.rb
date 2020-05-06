@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user, include: ["received_requests.*", "pending_requests.*", "contacts.*", "chats.initiator", "chats.recipient"]
+    render json: @user, include: ["received_requests.*", "pending_requests.*", "contacts.*", "chats.initiator", "chats.recipient", "chats.accepted"]
   end
 
   # POST /users

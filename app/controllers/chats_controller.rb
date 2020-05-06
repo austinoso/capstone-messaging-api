@@ -13,7 +13,7 @@ class ChatsController < ApplicationController
   # GET /chats/1
   def show
     if @chat #&& @chat.users.include?(current_user)
-      render json: @chat.messages
+      render json: @chat
     else
       render json: @chat.errors, status: :unauthorized
     end
@@ -43,7 +43,9 @@ class ChatsController < ApplicationController
   # PATCH/PUT /chats/1
   def update
     if @chat.update(chat_params)
-      render json: @chat
+      
+      ChatsChannel.broadcast_to(@chat.recipient, {chat: @chat, action: 'UPDATE'})
+      ChatsChannel.broadcast_to(@chat.initiator, {chat: @chat, action: 'UPDATE'})
     else
       render json: @chat.errors, status: :unprocessable_entity
     end
@@ -65,7 +67,7 @@ class ChatsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def chat_params
-      params.require(:chat).permit(:initiator_id, :recipient_id)
+      params.require(:chat).permit(:initiator_id, :recipient_id, :accepted)
     end
 
 end

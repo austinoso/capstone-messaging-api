@@ -7,4 +7,8 @@ class Chat < ApplicationRecord
   def users
     [self.initiator, self.recipient]
   end
+
+  def last_message
+    self.messages.last
+  end
 end
