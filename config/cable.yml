@@ -8,4 +8,3 @@ test:
 production:
   adapter: redis
   url: redis://redistogo:3471a884cbe93ae925470d8f28798b64@pike.redistogo.com:10850/
-  channel_prefix: message_app_api_production
