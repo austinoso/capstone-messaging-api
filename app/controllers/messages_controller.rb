@@ -19,8 +19,11 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
+      serialized_data = ActiveModelSerializers::Adapter::Json.new(
+        MessageSerializer.new(@message)
+      ).serializable_hash
       chat = Chat.find(@message.chat_id)
-      MessagesChannel.broadcast_to(chat, {content: @message.content, user: @message.user, chat_id: @message.chat_id})
+      MessagesChannel.broadcast_to(chat, {content: @message.content, user: { username: @message.user.username }, chat_id: @message.chat_id, created_at: @message.created_at})
     end
   end
 

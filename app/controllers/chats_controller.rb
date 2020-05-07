@@ -37,6 +37,7 @@ class ChatsController < ApplicationController
 
       ChatsChannel.broadcast_to(@chat.initiator, serialized_data)
       ChatsChannel.broadcast_to(@chat.recipient, serialized_data)
+      render json: @chat
     end
   end
 
