@@ -45,6 +45,12 @@ class ContactsController < ApplicationController
 
   # DELETE /contacts/1
   def destroy
+    serialized_data = ActiveModelSerializers::Adapter::Json.new(
+      ContactSerializer.new(@contact)
+    ).serializable_hash
+
+    ContactsChannel.broadcast_to(@contact.sender, {contact: @contact, action: 'DEL'})
+    ContactsChannel.broadcast_to(@contact.receiver, {contact: @contact, action: 'DEL'})
     @contact.destroy
   end
 
